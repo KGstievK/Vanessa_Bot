@@ -15,19 +15,10 @@ export type BotContext = Context & {
   update: Update.MessageUpdate | Update.EditedMessageUpdate;
 };
 
-export interface TelegramUser extends User {
-  id: number;
-}
-
-export interface TelegramChat extends Chat {
-  // Add specific properties if needed
-  id: number;
-}
-
-export interface TelegramMessage extends Message {
-  // Add specific properties if needed
-  message_id: number;
-}
+// Убраны пустые интерфейсы, вместо них используем прямо базовые типы
+export type TelegramUser = User;
+export type TelegramChat = Chat;
+export type TelegramMessage = Message;
 
 export interface BotPermissions {
   can_send_messages?: boolean;
@@ -63,10 +54,11 @@ export interface ChatMember {
 
 export interface TelegramState {
   activeVideoChats: Record<string, boolean>;
-  restrictedUsers: Record<number, number>; // Changed to use number as key for user IDs
+  restrictedUsers: Record<number, number>;
 }
 
-export interface TelegramApiResponse<T = unknown> { // Changed from 'any' to 'unknown'
+// Заменили any на unknown
+export interface TelegramApiResponse<T = unknown> {
   ok: boolean;
   result?: T;
   description?: string;
