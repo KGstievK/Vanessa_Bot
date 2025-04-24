@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   ChatMember,
   BotPermissions,
-  TelegramChat,
   TelegramMessage,
   TelegramUser,
   TelegramApiResponse // Теперь этот тип доступен

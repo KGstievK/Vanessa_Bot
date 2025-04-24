@@ -1,5 +1,4 @@
 import { Context, Update, Message, Chat, User } from "telegraf";
-import { MessageSubTypes } from "telegraf/types";
 
 declare module "telegraf" {
   interface Context {
@@ -16,7 +15,9 @@ export type BotContext = Context & {
   update: Update.MessageUpdate | Update.EditedMessageUpdate;
 };
 
-export interface TelegramUser extends User {}
+export interface TelegramUser extends User {
+  id: number | undefined;
+}
 export interface TelegramChat extends Chat {}
 export interface TelegramMessage extends Message {}
 

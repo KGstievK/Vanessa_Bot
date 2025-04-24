@@ -7,7 +7,7 @@ const CHECK_INTERVAL = 23 * 60 * 60 * 1000; // 23 часа
 export function startVideoChatScheduler(): void {
   const checkAndRenew = async () => {
     const activeChats = Object.entries(store.getState().telegram.activeVideoChats)
-      .filter(([_, active]) => active)
+      .filter(([active]) => active)
       .map(([chatId]) => chatId);
 
     for (const chatId of activeChats) {
