@@ -1,25 +1,31 @@
 import { NextResponse } from 'next/server';
-import { bot, launchBot } from '@/lib/bot/bot';
+import { telegramBot } from '@/lib/bot/bot';
 import { Update } from 'telegraf/types';
 
-// Инициализация бота
 let botInitialized = false;
 
 export async function POST(req: Request): Promise<NextResponse> {
-  if (!botInitialized) {
-    launchBot({
-      webhook: {
-        domain: process.env.NEXT_PUBLIC_TELEGRAM_WEBHOOK_URL || '',
-        port: Number(process.env.PORT) || 3000,
-      },
-    });
-    botInitialized = true;
-  }
-
   try {
-    const body: Update = await req.json();
-    await bot.handleUpdate(body);
-    return NextResponse.json({ ok: true });
+    const contentType = req.headers.get('content-type');
+    if (!contentType?.includes('application/json')) {
+      return NextResponse.json(
+        { error: 'Invalid content type' },
+        { status: 415 }
+      );
+    }
+
+    const body = await req.json() as Update;
+    
+    if (!botInitialized) {
+      // Инициализируем бота без параметров
+      await telegramBot.launch();
+      botInitialized = true;
+    }
+    
+    // Асинхронная обработка без ожидания
+    telegramBot.handleUpdate(body).catch(console.error);
+    
+    return NextResponse.json({ ok: true }, { status: 200 });
   } catch (error) {
     console.error('Error handling Telegram update:', error);
     return NextResponse.json(

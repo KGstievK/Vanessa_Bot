@@ -1,8 +1,10 @@
-import { bot } from './bot';
+import { NextFunction } from 'express';
+import { telegramBot } from './bot';
 import { BotContext } from '@/types/telegram';
+// import { NextFunction } from 'telegraf';
 
 export function setupLogger() {
-  bot.use(async (ctx: BotContext, next) => {
+  telegramBot.use(async (ctx: BotContext, next: NextFunction) => {
     const start = Date.now();
     await next();
     const responseTime = Date.now() - start;
