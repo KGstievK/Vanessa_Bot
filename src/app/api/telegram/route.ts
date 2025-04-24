@@ -9,7 +9,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   if (!botInitialized) {
     launchBot({
       webhook: {
-        domain: process.env.TELEGRAM_WEBHOOK_URL || '',
+        domain: process.env.NEXT_PUBLIC_TELEGRAM_WEBHOOK_URL || '',
         port: Number(process.env.PORT) || 3000,
       },
     });

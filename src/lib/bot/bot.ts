@@ -5,7 +5,7 @@ import { setupLogger } from './logger';
 import { startVideoChatScheduler } from './videoChatManager';
 import { BotContext, TelegramUser } from '@/types/telegram';
 
-const token = process.env.TELEGRAM_API_TOKEN;
+const token = process.env.NEXT_PUBLIC_TELEGRAM_API_TOKEN;
 if (!token) throw new Error('TELEGRAM_API_TOKEN is not set');
 
 export const bot = new Telegraf<BotContext>(token);
